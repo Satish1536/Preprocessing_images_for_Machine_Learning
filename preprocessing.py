@@ -31,27 +31,32 @@ from shutil import copy
 import os
 from random import shuffle
 
-path_base = '/content/drive/My Drive/Colab Notebooks/Dog Breed/'
-all_classes = os.listdir(path_base + 'preprocessing/')
+path_base = 
+unsampled_folder_path = 
+downsampled_folder_path = 
+all_classes = os.listdir(unsampled_folder_path)
+
+
+mini = min([len(os.listdir(unsampled_folder_path+'/'+i) for i in os.listdir(unsampled_folder_path))])
 
 b = 0
-for breed in all_classes:
-    current_breed_images = os.listdir(os.path.join(path_base, 'preprocessing', breed))
-    shuffle(current_breed_images)
-    current_breed_images = current_breed_images[:66]
+for category in all_classes:
+    current_category_images = os.listdir(os.path.join(unsampled_folder_path, breed))
+    shuffle(current_category_images)
+    current_category_images = current_category_images[:mini]
     c = 0
-    for current_img in current_breed_images:
-        path_from = os.path.join(path_base, 'preprocessing', breed, current_img)
-        path_to = os.path.join(path_base, 'downsampled', breed, current_img)
-        if not os.path.exists(os.path.join(path_base, 'downsampled')):
-            os.mkdir(os.path.join(path_base, 'downsampled'))
-
-        if not os.path.exists(os.path.join(path_base, 'downsampled', breed)):
-            os.mkdir(os.path.join(path_base, 'downsampled', breed))
+    for current_img in current_category_images:
+        path_from = os.path.join(unsampled_folder_path, category, current_img)
+        path_to = os.path.join(downsampled_folder_path, category, current_img)
+        if not os.path.exists(os.path.join(downsampled_folder_path)):
+            os.mkdir(os.path.join(downsampled_folder_path))
+        
+        if not os.path.exists(os.path.join(downsampled_folder_path, category)):
+            os.mkdir(os.path.join(downsampled_folder_path, category))
 
         copy(path_from, path_to)
         c += 1
-    print('Copied {} images of {}'.format(c, breed))
+    print('Copied {} images of {}'.format(c, category))
     b += 1
 print('done:', b)
 
